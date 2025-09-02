@@ -31,8 +31,11 @@ jobs:
       - name: Terraform Init
         run: terraform -chdir=terraform init -input=false
 
-      - name: Terraform Fmt
-        run: terraform -chdir=terraform fmt -check
+      - name: Terraform Fmt (write)
+        run: terraform -chdir=terraform fmt -recursive
+
+      - name: Terraform Fmt (check)
+        run: terraform -chdir=terraform fmt -check -recursive
 
       - name: Terraform Validate
         run: terraform -chdir=terraform validate
