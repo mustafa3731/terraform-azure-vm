@@ -8,10 +8,10 @@ terraform {
     }
   }
 
-  # Remote state in Azure Blob Storage
+  # Remote state in Azure Blob Storage (BACKEND)
   backend "azurerm" {
-    resource_group_name  = "tfstate-rg"              # <-- your tfstate RG
-    storage_account_name = "YOUR_STORAGE_ACCOUNT"    # <-- replace with your real storage account
+    resource_group_name  = "tfstate-rg"             
+    storage_account_name = "mustafastatestorage"   # <-- fixed with your real name
     container_name       = "tfstate"
     key                  = "azure-vm/terraform.tfstate"
   }
@@ -30,7 +30,7 @@ resource "azurerm_resource_group" "rg" {
 }
 
 # ------------------------
-# Networking: VNet, Subnet, Public IP, NSG, NIC
+# Networking
 # ------------------------
 resource "azurerm_virtual_network" "vnet" {
   name                = "${var.rg_name}-vnet"
@@ -103,7 +103,7 @@ resource "azurerm_network_interface_security_group_association" "nic_nsg" {
 }
 
 # ------------------------
-# Linux VM + Apache install via remote-exec
+# Linux VM + Apache via provisioner
 # ------------------------
 resource "azurerm_linux_virtual_machine" "vm" {
   name                = var.vm_name
